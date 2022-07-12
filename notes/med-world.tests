@@ -1,0 +1,36 @@
+when does world round off and why
+  - it should logically, i could see a part where i could extend it but i dont need to
+  - im filling in the holes now because i gave myself this techdebt when creating this dynamic, just because there is a lot doesnt mean it will
+  - but when it does, its super curious of why, find out, it may not seem as uncurious once you know but make sure you remember that you didnt know before, so its important to remember it
+
+
+non damage system
+  - probability to hit
+  - hit body part
+  - affected body part affects stats
+  - hit can be 4 levels {
+    ~ small: stun effect, body part affected
+    ~ medium: small + small bleed
+    ~ hard: small + hard bleed
+    ~ critical: destroy body part
+  }
+
+
+arrows have a combined hit mechanic
+  - you fire at the target and based on modifiers you hit a random tile in the area
+  - if your guy has high skill, range is close, weather is good, persons vision is good, persons strength is good, bow is good, anticipation is good, mental state is stable and focused
+  - once the arrow i fired location it lands is determined by probability
+    ~ if its over 90%, it will be in the same tile as the 
+
+
+
+game has combined controll system, they are half AI, half controlled
+  - its like the game Overload where u send gremlin, or Pikmin
+  - the fights play out real time however, you can tab between your characters and fight as any one of them, like a soccer game, or xcom or 
+  - you can tab to your leader and choose to zoom out as an rts
+  - from the zoomed out control view you dont control any individual units, but you do call out commands and specify areas and make decisions like reatreat, or activate and arranged manover
+  - your units are always controlled by ai, if you have one selected then you just view them while the ai plays untill you start commanding control
+
+give them ai and let them fight, then play as one and try and beat them
+use sprite sheet for angles
+
