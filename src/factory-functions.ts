@@ -1,3 +1,4 @@
+import { CanMove, Horse, RidesAHorse, CanBeAttacked, Person, Sword, Soldier, Bow, Archer, Knight, HorseArcher, WorldElement, Position } from "./types";
 
 
 const canMove = (location = {row:0, column: 0}): CanMove => {
@@ -41,24 +42,28 @@ const canAttack = (attacker: Person) => {
   return {
     attack: (target: CanBeAttacked) => {
       const {strength, weapon, skills} = attacker
-      let hitChance = 
+      let hitChance = 2
       let damage = 1 
-      damage = damage *=(
+      damage = damage * (
         weapon ?
-          weapon.quality 
-          weapon.skillRequirement 
+          weapon.quality *
+          weapon.skillRequirement *
+          strength
+        :
           strength
 
       )
-      target.getAttacked(attacker.weapon?.damage || 1)
+      target.getAttacked(damage)
     }
   }
 }
 
-const createPerson = (name: string): Person => {
+function createPerson(name: string): Person{
   return {
     name,
     strength: 5,
+    weapon: null,
+    skills: {bow: 0, sword: 0},
     ...canAttack(this),
     ...canBeAttacked(),
     ...canMove()
@@ -78,28 +83,30 @@ const createHorse = (name): Horse => {
 const createSoldier = (person: Person, sword: Sword): Soldier => {
   return {
     sword,
-    attack,
     ...person,
+    skills: {...person.skills, sword: 1}
   }
 }
 
 const createArcher = (person: Person, bow: Bow): Archer => {
   const archer: Archer = {
     bow,
-    skill: 0,
     fire(){
       this.bow
     },
     arrows: 0,
     ...person,
+    skills: {...person.skills, bow: 1},
   }
+  return archer
 }
 
 const createKnight = (person: Person, sword, horse): Knight => {
   return {
     sword,
     ...person,
-    ...canRideAHorse(horse)
+    skills: {...person.skills, sword: 1},
+    ...ridesAHorse(horse)
   }
 }
 
@@ -111,13 +118,14 @@ const createHorseArcher = (person: Person, bow: Bow, horse: Horse): HorseArcher 
     },
     bow,
     ...person,
-    ...hasAHorse
+    skills: {...person.skills, bow: 1},
+    ...ridesAHorse(horse)
   }
 }
 
 
-const createSword = (quality = 1, skillRequirement = 0, location: Location): Sword => {
-  const sword =  {
+const createSword = (location: Position, quality = 1, skillRequirement = 0) => {
+  const sword: Sword =  {
     type: 'Sword', 
     quality, 
     skillRequirement, 
@@ -129,10 +137,12 @@ const createSword = (quality = 1, skillRequirement = 0, location: Location): Swo
 
 {  
 
-  const createBow = ({range}: Bow) => {
+  const createBow = (location: Position, quality = 1, skillRequirement = 1) => {
     const bow: Bow = { 
-      quality
-      skillRequirement
+      type: 'Bow',
+      quality,
+      skillRequirement,
+      location
     }
 
     return bow

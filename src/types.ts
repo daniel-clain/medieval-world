@@ -1,47 +1,47 @@
 
-type World = {
+export type World = {
   people: (Person | Knight | Soldier | Archer | HorseArcher)[]
   animals: (Horse)[]
   items: any[]
 }
 
-type RidesAHorse = {
+export type RidesAHorse = {
   horse?: Horse
   ride()
 }
 
-type HasAName = {
+export type HasAName = {
   name
 }
 
 
 
-type Position = {
+export type Position = {
   row: number, 
   column: number
 }
 
 
-type Skills = {
+export type Skills = {
   sword: number
   bow: number
 }
 
-type CanAttack = {
-  weapon: Weapon
+export type CanAttack = {
+  weapon: Weapon | null
   skills: Skills
   attack(target: CanBeAttacked)
 }
 
-type CanBeAttacked = {
+export type CanBeAttacked = {
   getAttacked(damage: number)
 }
 
-type Direction = {
+export type Direction = {
   direction: 'up'|'down'|'left'|'right'
 }
 
-type CanMove = {
+export type CanMove = {
   location: Position
   move(direction: Direction): void
 }
@@ -55,76 +55,81 @@ enum Rating {
 }
   
 
-type Weapon = WorldElement & {
+export type Weapon = WorldElement & {
   type: 'Sword' | 'Bow'
   quality: Rating
   skillRequirement: Rating
 }
 
 
-type Sword = Weapon & {
+export type Sword = Weapon & {
 
 }
-type Bow = Weapon & {
+export type Bow = Weapon & {
   quality
   skillRequirement
 }
 
-type Arrow = {
+export type Arrow = {
   missileDamage: number
 }
 
-type HasAWeapon = {
+export type HasAWeapon = {
   weapon
   attack(target: CanBeAttacked)
 }
 
-type HasASword = HasAWeapon &{
+export type HasASword = HasAWeapon &{
   sword
 }
 
-type HasABow = HasAWeapon &{
+export type HasABow = HasAWeapon &{
   bow: Bow
 }
 
 
-type WorldElement = {
+export type WorldElement = {
   location: Position
 }
 
 
-type Person = WorldElement & HasAName & CanBeAttacked & CanMove & CanAttack & {
+export type Person = WorldElement & HasAName & CanBeAttacked & CanMove & CanAttack & {
   strength: number
 }
 
-type Soldier = 
+export type Soldier = 
   Person &
-  HasASword & {
-    skill: number
-}
+  HasASword & 
+  {
+    skills: {
+      sword: 1
+    }
+  } 
 
-type Archer = Person & HasABow & {
+export type Archer = Person & HasABow & {
   arrows: number
-  skill: number
+  skills: {
+    bow: 1
+  }
   fire(target: CanBeAttacked, arrow: Arrow)
 }
 
-type Knight = Soldier & RidesAHorse & {
+export type Knight = Soldier & RidesAHorse & {
 
 }
 
-type HorseArcher = RidesAHorse & Archer & {
+export type HorseArcher = RidesAHorse & Archer & {
 
 }
 
-type Animal = WorldElement & HasAName & CanMove & CanBeAttacked & {
+export type Animal = WorldElement & HasAName & CanMove & CanBeAttacked & {
 
 }
 
-type Horse = Animal & {
+export type Horse = Animal & {
 
 }
 
-type Tree = WorldElement & CanBeAttacked & {
+export type Tree = WorldElement & CanBeAttacked & {
 
 }
