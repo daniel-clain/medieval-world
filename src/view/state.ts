@@ -1,5 +1,5 @@
 
-import { observable } from "mobx";
+import { observable } from "front-end-base";
 import { World } from "../types";
 
 export type MainState = {
