@@ -1,20 +1,13 @@
-import { observer } from 'mobx-react';
-import * as React from 'react';
-import { state } from '../state';
 
-export const Person_C = observer(() => {
-  const {game} = state
-  const {person} = game!
-  const {name,money,boredom,feeling,hunger} = person
+import * as React from 'react';
+import { Person } from '../../game/world-objects/people/person';
+
+export const Person_C = <T extends Person>({person}: {person: T}) => {
   return <>
     <person-element>
       <person-info>
-        <span>{name}</span>
-        <span>Money {money}</span>
-        <span>Boredom {boredom}</span>
-        <span>Feeling {feeling}</span>
-        <span>Hunger {hunger}</span>
+        <span>{person.name}</span>
       </person-info>
     </person-element>
   </>
-})
+}

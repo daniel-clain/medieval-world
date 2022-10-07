@@ -1,8 +1,17 @@
-import { World } from "./types";
+import { runInAction } from "mobx";
+import { createPerson } from "./game/factory-functions";
+import { Game } from "./game/game";
+import { gameConfig } from "./game/game-config";
+import { numberLoop } from "./game/helper-functions";
+import { Person } from "./game/world-objects/people/person";
+import { state } from "./view/state/state";
 
+const game = new Game()
 
-export const medievalWorld: World = observable({testMode: true, world: null})
+game.world.people = numberLoop(10, 
+  () => new Person(gameConfig.listOfNames.pop()!, game)
+)
 
-function observable(arg0: { testMode: boolean; world: null; }): MedivalWorld {
-  throw new Error("Function not implemented.");
-}
+runInAction(() => {
+  state.game = game
+})

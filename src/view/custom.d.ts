@@ -1,7 +1,3 @@
-import * as React from 'react';
-declare module "*.jpg";
-declare module "*.png";
-declare module "*.mp3";
 
 interface Elem extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>{
   class?: string
