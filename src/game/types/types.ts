@@ -1,5 +1,15 @@
+import { Action } from "../actions/action"
+import { Animal } from "../world-objects/animals/animal"
+import { Person } from "../world-objects/people/person"
+import { WorldObject } from "../world-objects/world-object"
+import { Position } from "./helper-types"
 
-import { Position, WorldElement } from "./world-objects/world-object.type"
+
+export type CanDecideAction = {
+  currentAction: Action | undefined
+  decideWhatActionToTake()
+}
+
 
 
 export type RidesAHorse = {
@@ -20,21 +30,24 @@ export type Skills = {
 
 export type CanAttack = {
   weapon: Weapon | null
+}
+export type HasSkills = {
   skills: Skills
-  attack(target: CanBeAttacked)
 }
 
 export type CanBeAttacked = {
+  hitPoints: number
+  isDead: boolean
   getAttacked(damage: number)
 }
 
-export type Direction = {
+export type Angle = {
   direction: 'up'|'down'|'left'|'right'
 }
 
 export type CanMove = {
-  location: Position
-  move(direction: Direction): void
+  position: Position
+  move(newPosition: Position): void
 }
 
 enum Rating {
@@ -46,7 +59,7 @@ enum Rating {
 }
   
 
-export type Weapon = WorldElement & {
+export type Weapon = WorldObject & {
   type: 'Sword' | 'Bow'
   quality: Rating
   skillRequirement: Rating
@@ -79,11 +92,6 @@ export type HasABow = HasAWeapon &{
 }
 
 
-
-export type Person = WorldElement & HasAName & CanBeAttacked & CanMove & CanAttack & {
-  strength: number
-}
-
 export type Soldier = 
   Person &
   HasASword & 
@@ -109,14 +117,10 @@ export type HorseArcher = RidesAHorse & Archer & {
 
 }
 
-export type Animal = WorldElement & HasAName & CanMove & CanBeAttacked & {
-
-}
-
 export type Horse = Animal & {
 
 }
 
-export type Tree = WorldElement & CanBeAttacked & {
+export type Tree = WorldObject & CanBeAttacked & {
 
 }

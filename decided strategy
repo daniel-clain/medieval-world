@@ -1,3 +1,6 @@
-* classes for primary modules
+* not classes for primary modules
   - why?, a creater function that returns a type has its separation split in 2 places and a lot is duplicated
     - eg you make the type and declare what it takes and what it returns, and then in the creator function you do the same again
+
+* creater functions instead
+  - why?, you can spread other composable parts into the object

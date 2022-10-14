@@ -1,32 +1,33 @@
-import { reaction } from "mobx";
-import { Game } from "./game";
-import { twoDec } from "./helper-functions";
-import { Animal } from "./types";
+import { gameConfig } from "./config/game-config";
 import { Person } from "./world-objects/people/person";
+import { observable } from "mobx";
+import { Animal } from "./world-objects/animals/animal";
 
-export class World{
-  private worldTimer
-  time = 0
-  people: Person[] = []
-  animals: Animal[] = []
-  items: any[] = []
-  constructor(private game: Game){
-    reaction(
-      () => game.paused, this.onGamePauseToggle
-    )
-  }
-
-  private onGamePauseToggle(){
-    if(this.game.paused){
-      clearTimeout(this.worldTimer)
-    } else {
-      this.worldTimer = setInterval(
-        this.incrementTime, 100
-      )
+const {rows, columns, tileSize} = gameConfig
+export type World = {
+  people: Person[]
+  animals: Animal[]
+  items: any[]
+  tileSize: number
+  rows: number
+  columns: number
+  height: number
+  width: number
+}
+export function createWorld(){
+  const world: World = observable({
+    people: [],
+    animals: [],
+    items: [],
+    tileSize,
+    rows,
+    columns,
+    get height(){
+      return this.rows * this.tileSize
+    },
+    get width(){
+      return this.columns * this.tileSize
     }
-  }
-
-  private incrementTime(){
-    this.time = twoDec(this.time + 0.1)
-  }
+  })
+  return world
 }

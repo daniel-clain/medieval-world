@@ -5,86 +5,43 @@
 
 body
   margin: 0
-
-risk-management
-  @include flexCenter
   overflow: hidden
-  flex-direction: column
-  background-color: #2c2e35
-  font-family: 'Open Sans'
-  font-weight: 500
 
-  test-element
-    position: absolute
-    top: 4%
-    right: 4%
-    width: 20%
+t-container, .t-container
+  display: flex
+  flex-direction: column
+  padding: 1rem
+  box-shadow: 0 0 0 .1em inset black
+
+  t-row, .t-row
+    display: flex
+    gap: 1em
+
+  t-heading, .t-heading
+    display: block
+
+  t-label
+    padding-right: 1rem
+    margin-right: auto
+    white-space: nowrap
+    &::after
+      content: ': '
+
+  t-data
+    margin-left: auto
+    white-space: nowrap
+    min-width: 2rem
+    text-align: right
+
+  t-group, .t-group
+    padding: 0.2rem 0
     display: flex
     flex-direction: column
-    align-items: flex-end
 
-  pre-game
-    @include flexCenter
-    flex-direction: column
-    gap: 1rem
-    start-button, continue-button
-      @include button(green)
-
-
-  game-view
-    @include flexCenter
-    position: relative
-    max-width: 100%
-
-    game-background
-      @include flexCenter
-      pointer-events: none
-      img
-        height: 100%
-
-    existing-things
-      position: absolute
-
-
-    person-element
-      background: url('./images/guy.png') no-repeat
-      aspect-ratio: .461
-      height: 25%
-      background-size: contain
-      @include positionCenter
-      top: 80%
-      z-index: 1
-
-      person-info
-        width: 60px
-        background: white
-        padding: .5rem
-        border: 2px solid black
-        left: 100%
-        position: absolute
-        font-size: .5rem
-        display: flex
-        flex-direction: column
-
-
-    player-interface
-      position: absolute
-      inset: 0
-      padding: 4%
-      pointer-events: none
-      * 
-        pointer-events: all
-        position: absolute
-
-      pause-button
-        @include button($color: yellow)
-        bottom: 1rem
-        left: 1rem   
-
-      game-level     
-        top: 1rem
-        left: 1rem
-      
-      game-time
-        @include positionCenter
-        top: 1rem
+  t-container, .container
+    .container, t-container
+      box-shadow: none
+      padding: 0
+      >*:not(t-heading, .heading, button)
+        font-size: 0.9em
+        padding: 0 0 0 1rem

@@ -1,0 +1,9 @@
+* to make the animations look good
+  - the appropriate time should be given to each frame
+    ~ some should be short to give a quick motion feel
+  - each new image should keep the character in a relative spot, it should not jump around
+
+* the sprite sheen has 8 facing directions
+  - n, ne, e, se, s, sw, w, nw
+  - as the characters direction changes, the sprite image should change to the same frame of a different facing angle
+    ~ eg if a walk animation has 5 stages, and the unit changes direction on the 3rd stage, then it should be the 3rd stage in the changed direction

@@ -1,17 +1,36 @@
 import { runInAction } from "mobx";
-import { createPerson } from "./game/factory-functions";
-import { Game } from "./game/game";
-import { gameConfig } from "./game/game-config";
-import { numberLoop } from "./game/helper-functions";
-import { Person } from "./game/world-objects/people/person";
+import { createGame, Game } from "./game/game";
+import { gameConfig } from "./game/config/game-config";
+import { numberLoop } from "./general-helper-functions";
+import { createPerson } from "./game/world-objects/people/person";
 import { state } from "./view/state/state";
+import { createHorse } from "./game/world-objects/animals/horse";
 
-const game = new Game()
-
-game.world.people = numberLoop(10, 
-  () => new Person(gameConfig.listOfNames.pop()!, game)
-)
 
 runInAction(() => {
-  state.game = game
+  state.game = createGame()
+})
+
+runInAction(() => {
+  state.game.world.people.push(
+    ...numberLoop(
+      6, 
+      () => createPerson({
+        name: gameConfig.listOfNames.pop()!
+      })
+    )
+  )
+  state.game.world.animals.push(
+    ...numberLoop(
+      2, 
+      () => createHorse({
+        name: gameConfig.listOfNames.pop()!
+      })
+    )
+  )
+  state.game.paused = false
+})
+console.log('start');
+runInAction(() => {
+  state.game.world.people.forEach(p => p.decideWhatActionToTake())
 })

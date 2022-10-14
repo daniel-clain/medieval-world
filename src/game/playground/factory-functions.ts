@@ -1,16 +1,17 @@
+import { observable } from "mobx";
+import { Horse, RidesAHorse, CanBeAttacked, Sword, Soldier, Bow, Archer, Knight, HorseArcher, Position, CanMove } from "../types/types";
+import { WorldObject } from "../world-objects/world-object";
 
-import { CanMove, Horse, RidesAHorse, CanBeAttacked, Person, Sword, Soldier, Bow, Archer, Knight, HorseArcher} from "./types";
-import { Position, WorldElement } from "./world-objects/world-object.type";
 
-
-const canMove = (location = {x:0, y: 0}): CanMove => {
+export const canMove = (position: Position): CanMove => {
   return {
-    location,
-    move(direction){
-      console.log(`direction is ${direction}`);
+    position,
+    move(newPosition){
+      this.position = newPosition
     }
   }
 }
+
 
 
 function ridesAHorse(horse: Horse): RidesAHorse{
@@ -21,21 +22,26 @@ function ridesAHorse(horse: Horse): RidesAHorse{
     }
   }
 }
-const canBeAttacked = (): CanBeAttacked => {
-  return {
-    getAttacked(){
 
+export const canBeAttacked = (hitPoints: number): CanBeAttacked => {
+  return observable({
+    hitPoints,
+    get isDead(){ return this.hitPoints <= 0},
+    getAttacked(attackDamage: number){
+      this.hitPoints -= attackDamage
     }
-
-  }
+  })
 }
 
 
-const canAttack = (attacker: Person) => {
+
+export const canAttack = (attackDamage: number) => {
 
   return {
+    attackDamage,
     attack: (target: CanBeAttacked) => {
-      const {strength, weapon, skills} = attacker
+      target.getAttacked(attackDamage)
+      /* const {strength, weapon, skills} = attackerState
       let hitChance = 2
       let damage = 1 
       damage = damage * (
@@ -47,28 +53,16 @@ const canAttack = (attacker: Person) => {
           strength
 
       )
-      target.getAttacked(damage)
+      target.getAttacked(damage) */
     }
   }
 }
 
-export function createPerson(name: string): Person{
-  return {
-    name,
-    strength: 5,
-    weapon: null,
-    skills: {bow: 0, sword: 0},
-    ...canAttack(this),
-    ...canBeAttacked(),
-    ...canMove()
-  }
-}
 
 const createHorse = (name): Horse => {
   return {
     name,
-    ...canBeAttacked(),
-    ...canMove()
+    ...canBeAttacked()
   }
 }
 
@@ -142,6 +136,6 @@ const createSword = (location: Position, quality = 1, skillRequirement = 0) => {
     return bow
 
     
-    const isWithinRange = (target: WorldElement) => {}
+    const isWithinRange = (target: WorldObject) => {}
   }
 }

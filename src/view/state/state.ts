@@ -1,4 +1,9 @@
-import { observable } from "mobx";
+
 import { Game } from "../../game/game";
 
-export const state: {game?: Game} =  observable({})
+export class RootState{
+  game: Game
+}
+export const state = new RootState()
+
+

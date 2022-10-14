@@ -1,0 +1,11 @@
+☐ person and actions working, but doesnt have solid typescript applied. get it workign with typescript
+☐ sprite animations
+☐ there should be 2 categories of actions, super and sub
+  - egs
+    ~ super go to here to attack enemies, sub move to attack target enemy, sub attack target enemy, sub swing sword
+    ~ doesnt stop swingin sword until attack enemy is finished
+    ~ doesnt attack enemy until move to enemy is finished
+    ~ doestn move to enemy until got here to attack 
+    ~ goe here and attack enemies until all enemies are dead
+
+    

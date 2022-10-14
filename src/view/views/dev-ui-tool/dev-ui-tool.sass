@@ -1,0 +1,28 @@
+dev-ui-tool
+  transform: translateX(100%)
+  position: absolute
+  background: white
+  width: 400px
+  display: block
+  border: 1px solid black
+  top: 0
+  right: 0
+  padding: 20px
+  transition: transform .5s
+
+
+  &.is-open
+    transform: translateX(0%)
+
+  dev-tool-tag
+    position: absolute
+    right: 100%
+    background: white
+    padding: 4px 16px
+    border-radius: 10px 0 0 10px
+    border: 2px solid black
+    cursor: pointer
+
+  person-element
+    position: unset
+    transform: unset

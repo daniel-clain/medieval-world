@@ -25,11 +25,6 @@
       border-color: change-color($color, $saturation: 25%, $lightness: 15%)
 
 
-@mixin positionCenter
-  position: absolute
-  top: 50%
-  left: 50%
-  transform: translate(-50%, -50%)
 
 @mixin resetBase
   body
@@ -37,3 +32,22 @@
     overflow: hidden
 
 
+
+@mixin positionCenter($horizontal, $vertical)
+  position: absolute
+
+  @if $horizontal
+    left: 50%
+
+  @if $vertical
+    top: 50%
+
+  @if $horizontal and $vertical == false
+    transform: translateX(-50%)
+
+  @if $vertical and $horizontal == false
+    transform: translateY(-50%)
+
+  @if $horizontal and $vertical
+    transform: translate(-50%, -50%)
+    

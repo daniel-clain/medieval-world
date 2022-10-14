@@ -26,3 +26,15 @@ export const shuffle = <T>(array: T[]): T[] => {
 export function twoDec(num: number){
   return (Math.round((num) * 100) / 100)
 }
+
+
+export function randomNumber({from, to}:{from: number, to: number}){
+  return Math.ceil(Math.random()*(to-from) + from)
+}
+
+export const randomNumberDigits = (digits: number) => Math.round(Math.random() * Math.pow(10, digits))
+
+export const createId = () => Date.now() + randomNumberDigits(10)
+
+
+export const wait = (milliseconds: number): Promise<void> => new Promise(resolve => setTimeout(resolve, milliseconds))

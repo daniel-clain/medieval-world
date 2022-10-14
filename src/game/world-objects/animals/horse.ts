@@ -1,7 +1,6 @@
 import { observable, reaction } from "mobx";
-import { createId, randomNumber } from "../../../general-helper-functions";
 import { createWorldObject, WorldObject } from "../world-object";
-import { HasAName, CanBeAttacked, CanDecideAction, HasSkills, CanMove } from "../../types/types";
+import { CanBeAttacked, CanDecideAction, CanMove } from "../../types/types";
 import { canAttack, canBeAttacked, canMove } from "../../playground/factory-functions";
 import { canDecideAction } from "../../actions/can-decide-action";
 import { wanderAround } from "../../actions/action";
@@ -9,49 +8,40 @@ import { state } from "../../../view/state/state";
 import { Position } from "../../types/helper-types";
 
 
-export type Person_D = 
-  WorldObject &
-  HasAName & 
-  HasSkills & 
+export type Horse_D = 
+  WorldObject
 {}
 
-export type Person = Person_D &
+export type Horse = Horse_D &
   CanBeAttacked & CanDecideAction & CanMove
 {}
 
-export function createPerson({name, position}: 
+export function createHorse({position}: 
   {name: string, position?: Position}
 ) {
-  const personState: Person_D = observable(
-    Object.assign(
-      {
-        name,
-        skills: {bow: 0, sword: 0},
-      },
-      createWorldObject(position)
-    )
+  const horseState: Horse_D = observable(
+    createWorldObject(position)
   )
-  const person: Person = Object.assign(
-    personState,
-    canMove(personState.position),
+  const horse: Horse = Object.assign(
+    horseState,
+    canMove(horseState.position),
     canBeAttacked(10),
-    canAttack(2),
     canDecideAction(
-      personState,
+      horseState,
       [wanderAround]
     )
   )
 
   onTimePassed(() => {
-    person.currentAction?.spendTimeOnAction()    
+    horse.currentAction?.spendTimeOnAction()    
   })
 
   onTaskCompleted(() =>
-    person.decideWhatActionToTake()
+  horse.decideWhatActionToTake()
   )
 
 
-  return person
+  return horse
 
 
   function onTimePassed(effect: () => void){
@@ -64,7 +54,7 @@ export function createPerson({name, position}:
 
   function onTaskCompleted(effect){
     reaction(
-      () => person.currentAction?.completed, 
+      () => horse.currentAction?.completed, 
       () => effect()
     )
   }
